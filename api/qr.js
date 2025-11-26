@@ -21,9 +21,10 @@ module.exports = async (req, res) => {
 
   const userAgent = req.headers['user-agent'] || null;
 
-  // In futuro: qui potremo mettere customerId / email da Shopify
-  const customerId = null;
-  const customerEmail = null;
+  // --- NOVITÀ: proviamo a leggere i dati del cliente dalla query ---
+  // es: ?code=TEST-001&customerId=123&customerEmail=foo%40bar.com
+  const customerId = (req.query.customerId || '').trim() || null;
+  const customerEmail = (req.query.customerEmail || '').trim() || null;
 
   // 1. Recupera il QR da Supabase
   const { data: qrRow, error: qrError } = await supabase
